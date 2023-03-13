@@ -1,0 +1,15 @@
+import { ReactElement } from "react";
+
+interface FunnyImageProps {
+  clickHandler: () => void;
+  imageUrl: string;
+}
+
+const FunnyImage = ({
+  clickHandler,
+  imageUrl,
+}: FunnyImageProps): ReactElement => {
+  return <img className="image" onClick={clickHandler} src={imageUrl} />;
+};
+
+export default FunnyImage;
