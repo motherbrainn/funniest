@@ -17,8 +17,13 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div>funniest</div>
+        <div>which image is funnier?</div>
         <ImageChoice />
+        <footer>
+          <a href="#" style={{ textDecoration: "underline" }}>
+            today's top 10 funniest images on the web
+          </a>
+        </footer>
       </main>
     </>
   );
