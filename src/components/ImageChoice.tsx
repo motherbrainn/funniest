@@ -1,16 +1,29 @@
 import { ReactElement } from "react";
-import FunnyImage from "./Image";
+import FunnyImage from "./FunnyImage";
 
-const ImageChoice = (): ReactElement => {
+interface ImagesInterface {
+  images: {
+    left: {
+      imageUrl: string;
+      clickHandler: (e) => void;
+    };
+    right: {
+      imageUrl: string;
+      clickHandler: (e) => void;
+    };
+  };
+}
+
+const ImageChoice = ({ images }: ImagesInterface): ReactElement => {
   return (
     <div className="image-container">
       <FunnyImage
-        clickHandler={() => console.log("image 1")}
-        imageUrl="https://media.tenor.com/images/1d73fd5b39730fd356b482128eb3746a/tenor.gif"
+        clickHandler={(e) => images.left.clickHandler(e)}
+        imageUrl={images.left.imageUrl}
       />
       <FunnyImage
-        clickHandler={() => console.log("image 2")}
-        imageUrl="https://media.tenor.com/images/6e45dbbc34d8427ffcc322024c73f8fc/tenor.gi"
+        clickHandler={(e) => images.right.clickHandler(e)}
+        imageUrl={images.right.imageUrl}
       />
     </div>
   );

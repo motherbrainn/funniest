@@ -1,13 +1,107 @@
 import Head from "next/head";
 import Image from "next/image";
-import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import FunnyImage from "@/components/Image";
+import FunnyImage from "@/components/FunnyImage";
 import ImageChoice from "@/components/ImageChoice";
+import { GiphyFetch } from "@giphy/js-fetch-api";
+import prisma from "../../lib/prisma";
+import { GetStaticProps } from "next";
+import Router from "next/router";
+import {
+  dehydrate,
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
+import { useState } from "react";
+import App from "./App";
 
-const inter = Inter({ subsets: ["latin"] });
+//const queryClient = new QueryClient();
+const env = process.env.NODE_ENV;
 
-export default function Home() {
+const giphyApiKey = env["GIPHY_API_KEY"];
+
+// pages/index.tsx
+
+// use @giphy/js-fetch-api to fetch gifs, instantiate with your api key
+const gf = new GiphyFetch(giphyApiKey);
+
+const getStuff = async () => {
+  const z = await fetch("http://localhost:3000/api/image/getImages").then(
+    (res) => res.json()
+  );
+
+  return z;
+};
+export const getImages = async () => {
+  const data = await fetch("http://localhost:3000/api/image/getImages").then(
+    (res) => res.json()
+  );
+  return data;
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery("posts", getImages);
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+};
+
+async function deletePost(id: string): Promise<void> {
+  await fetch(`/api/image/${id}`, {
+    method: "DELETE",
+  });
+  Router.push("/");
+}
+
+async function get(): Promise<void> {
+  const test = await fetch(`/api/image/getImages`, {
+    method: "GET",
+  });
+  Router.push("/");
+}
+
+async function addPost(): Promise<void> {
+  await fetch(`/api/image/addImage`, {
+    method: "POST",
+  });
+  Router.push("/");
+}
+const submitData = async (e: React.SyntheticEvent) => {
+  e.preventDefault();
+  try {
+    const body = { title, content };
+    await fetch("/api/post", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    await Router.push("/drafts");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const voteForImage = async (e: React.SyntheticEvent) => {
+  e.preventDefault();
+
+  const imageUrl = e.target.getAttribute("src");
+
+  await fetch("/api/image/vote", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageUrl }),
+  });
+  //await Router.push("/");
+};
+
+export default function Home({ dehydratedState }) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <>
       <Head>
@@ -17,13 +111,17 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div>which image is funnier?</div>
-        <ImageChoice />
-        <footer>
-          <a href="#" style={{ textDecoration: "underline" }}>
-            today's top 10 funniest images on the web
-          </a>
-        </footer>
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={dehydratedState}>
+            <div>which image is funnier?</div>
+            <App />
+            <footer>
+              <a href="#" style={{ textDecoration: "underline" }}>
+                today's top 10 funniest images on the web
+              </a>
+            </footer>
+          </Hydrate>
+        </QueryClientProvider>
       </main>
     </>
   );
