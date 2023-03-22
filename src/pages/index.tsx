@@ -19,14 +19,13 @@ import { useEffect, useState } from "react";
 import App from "./App";
 
 //const queryClient = new QueryClient();
-const env = process.env.NODE_ENV;
 
-const giphyApiKey = env["GIPHY_API_KEY"];
+//const giphyApiKey = env["GIPHY_API_KEY"];
 
 // pages/index.tsx
 
 // use @giphy/js-fetch-api to fetch gifs, instantiate with your api key
-const gf = new GiphyFetch(giphyApiKey);
+//const gf = new GiphyFetch(giphyApiKey);
 
 const getStuff = async () => {
   const z = await fetch("http://localhost:3000/api/image/getImages").then(
