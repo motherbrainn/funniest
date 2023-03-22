@@ -1,14 +1,8 @@
-export const getRandomIntInclusive = (min: number, max: number) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
-};
-
-export const getTwoRandomIntsInRange = (min: number, max: number) => {
+export const getTwoRandomIntsInRange = (min: number, max: number): number[] => {
   const nums = new Set();
   while (nums.size !== 2) {
     nums.add(Math.floor(Math.random() * (max - min + 1) + min));
   }
 
-  return [...nums];
+  return [...nums] as number[];
 };

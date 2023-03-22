@@ -1,43 +1,59 @@
 import ImageChoice from "@/components/ImageChoice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { getImages, voteForImage } from ".";
-import { getRandomIntInclusive, getTwoRandomIntsInRange } from "./utils";
+import { getTwoRandomIntsInRange } from "./utils";
+
+export interface ImageChoiceObject {
+  left: {
+    imageUrl: string;
+    clickHandler: () => void;
+  };
+  right: {
+    imageUrl: string;
+    clickHandler: () => void;
+  };
+}
 
 export const App = () => {
   const { data } = useQuery("posts", getImages);
-  console.log(data);
 
-  const set = () => {
+  const createImageObject = (): ImageChoiceObject => {
     const [randomNumber1, randomNumber2] = getTwoRandomIntsInRange(0, 3);
+
+    const {
+      [randomNumber1]: { image_url: imageUrl1 },
+      [randomNumber2]: { image_url: imageUrl2 },
+    } = data;
 
     return {
       left: {
-        imageUrl: data[randomNumber1].image_url,
-        clickHandler: (e) => imageClickHandler(e),
+        imageUrl: imageUrl1,
+        clickHandler: () => imageClickHandler(imageUrl1),
       },
       right: {
-        imageUrl: data[randomNumber2].image_url,
-        clickHandler: (e) => imageClickHandler(e),
+        imageUrl: imageUrl2,
+        clickHandler: () => imageClickHandler(imageUrl2),
       },
     };
   };
 
-  const [images, setImages] = useState(set());
+  //initially set images to undefined to keep in sync with SSR
+  const [images, setImages] = useState<undefined | ImageChoiceObject>();
 
-  const [nums, setNums] = useState(getTwoRandomIntsInRange(0, 3));
+  //immediately set images on page load after SSR is sync'd
+  useEffect(() => {
+    setImages(createImageObject());
+  }, []);
 
-  const imageClickHandler = (e) => {
-    //shuffle nums
-    voteForImage(e);
-    setImages(set());
+  const imageClickHandler = (imageUrl: string) => {
+    //vote for selected image
+    voteForImage(imageUrl);
+    //shuffle images for next cycle
+    setImages(createImageObject());
   };
 
-  return (
-    <div>
-      <ImageChoice images={images} />
-    </div>
-  );
+  return <div>{images && <ImageChoice images={images} />}</div>;
 };
 
 export default App;

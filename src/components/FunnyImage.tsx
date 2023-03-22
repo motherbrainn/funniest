@@ -2,7 +2,7 @@ import { ReactElement } from "react";
 import { useQuery } from "react-query";
 
 interface FunnyImageProps {
-  clickHandler: (e) => void;
+  clickHandler: () => void;
   imageUrl: string;
 }
 
@@ -11,7 +11,7 @@ export const FunnyImage = ({
   imageUrl,
 }: FunnyImageProps): ReactElement => {
   return (
-    <img className="image" onClick={(e) => clickHandler(e)} src={imageUrl} />
+    <img className="image" onClick={() => clickHandler()} src={imageUrl} />
   );
 };
 

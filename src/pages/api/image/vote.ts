@@ -1,13 +1,11 @@
-// pages/api/post/index.ts
-
 import prisma from "../../../../lib/prisma";
+import type { NextApiRequest, NextApiResponse } from "next";
 
-// POST /api/post
-// Required fields in body: title
-// Optional fields in body: content
-export default async function handle(req, res) {
+export default async function handle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { imageUrl } = req.body;
-  console.log("url", imageUrl);
 
   const result = await prisma.funny_images.update({
     where: {

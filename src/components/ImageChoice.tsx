@@ -1,28 +1,20 @@
+import { ImageChoiceObject } from "@/pages/App";
 import { ReactElement } from "react";
 import FunnyImage from "./FunnyImage";
 
-interface ImagesInterface {
-  images: {
-    left: {
-      imageUrl: string;
-      clickHandler: (e) => void;
-    };
-    right: {
-      imageUrl: string;
-      clickHandler: (e) => void;
-    };
-  };
+export interface ImageChoiceProps {
+  images: ImageChoiceObject;
 }
 
-const ImageChoice = ({ images }: ImagesInterface): ReactElement => {
+const ImageChoice = ({ images }: ImageChoiceProps): ReactElement => {
   return (
     <div className="image-container">
       <FunnyImage
-        clickHandler={(e) => images.left.clickHandler(e)}
+        clickHandler={() => images.left.clickHandler()}
         imageUrl={images.left.imageUrl}
       />
       <FunnyImage
-        clickHandler={(e) => images.right.clickHandler(e)}
+        clickHandler={() => images.right.clickHandler()}
         imageUrl={images.right.imageUrl}
       />
     </div>

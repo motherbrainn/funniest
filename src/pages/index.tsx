@@ -12,8 +12,10 @@ import {
   Hydrate,
   QueryClient,
   QueryClientProvider,
+  useQuery,
+  type DehydratedState,
 } from "react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import App from "./App";
 
 //const queryClient = new QueryClient();
@@ -86,11 +88,7 @@ const submitData = async (e: React.SyntheticEvent) => {
   }
 };
 
-export const voteForImage = async (e: React.SyntheticEvent) => {
-  e.preventDefault();
-
-  const imageUrl = e.target.getAttribute("src");
-
+export const voteForImage = async (imageUrl: string) => {
   await fetch("/api/image/vote", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -99,9 +97,12 @@ export const voteForImage = async (e: React.SyntheticEvent) => {
   //await Router.push("/");
 };
 
-export default function Home({ dehydratedState }) {
-  const [queryClient] = useState(() => new QueryClient());
-
+export default function Home() {
+  //const [queryClient] = useState(() => new QueryClient());
+  const { data } = useQuery("posts", getImages);
+  useEffect(() => {
+    console.log("new data", data);
+  }, []);
   return (
     <>
       <Head>
@@ -111,17 +112,13 @@ export default function Home({ dehydratedState }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <QueryClientProvider client={queryClient}>
-          <Hydrate state={dehydratedState}>
-            <div>which image is funnier?</div>
-            <App />
-            <footer>
-              <a href="#" style={{ textDecoration: "underline" }}>
-                today's top 10 funniest images on the web
-              </a>
-            </footer>
-          </Hydrate>
-        </QueryClientProvider>
+        <div>which image is funnier?</div>
+        <App />
+        <footer>
+          <a href="#" style={{ textDecoration: "underline" }}>
+            today's top 10 funniest images on the web
+          </a>
+        </footer>
       </main>
     </>
   );
