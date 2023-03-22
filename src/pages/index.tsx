@@ -74,6 +74,7 @@ async function addPost(): Promise<void> {
 }
 const submitData = async (e: React.SyntheticEvent) => {
   e.preventDefault();
+  //
   try {
     const body = { title, content };
     await fetch("/api/post", {
