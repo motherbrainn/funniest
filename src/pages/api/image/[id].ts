@@ -8,7 +8,8 @@ export default async function handle(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const postId = req.query.id;
+  // const postId = req.query.id;
+  const postId = "test";
   if (req.method === "DELETE") {
     const post = await prisma.funny_images.delete({
       where: { id: parseInt(postId) },
