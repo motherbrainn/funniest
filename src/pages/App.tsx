@@ -2,7 +2,7 @@ import ImageChoice from "@/components/ImageChoice";
 import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { getImages, voteForImage } from ".";
-import { getTwoRandomIntsInRange } from "./utils";
+import { getTwoRandomIntsInRange } from "../utils";
 
 export interface ImageChoiceObject {
   left: {
