@@ -72,21 +72,21 @@ async function addPost(): Promise<void> {
   });
   Router.push("/");
 }
-const submitData = async (e: React.SyntheticEvent) => {
-  e.preventDefault();
-  //
-  try {
-    const body = { title, content };
-    await fetch("/api/post", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    await Router.push("/drafts");
-  } catch (error) {
-    console.error(error);
-  }
-};
+// const submitData = async (e: React.SyntheticEvent) => {
+//   e.preventDefault();
+//   //
+//   try {
+//     const body = { title, content };
+//     await fetch("/api/post", {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify(body),
+//     });
+//     await Router.push("/drafts");
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
 
 export const voteForImage = async (imageUrl: string) => {
   await fetch("/api/image/vote", {
@@ -116,7 +116,7 @@ export default function Home() {
         <App />
         <footer>
           <a href="#" style={{ textDecoration: "underline" }}>
-            today's top 10 funniest images on the web
+            todays top 10 funniest images on the web
           </a>
         </footer>
       </main>
