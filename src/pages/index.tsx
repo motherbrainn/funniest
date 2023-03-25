@@ -29,7 +29,6 @@ import { getAllImages } from "../pages/api/image/getImages";
 //const gf = new GiphyFetch(giphyApiKey);
 
 export const getImages = async () => {
-  console.log("hi");
   const data = await fetch("/api/image/getImages").then((res) => res.json());
   return data;
 };
@@ -76,9 +75,7 @@ export const voteForImage = async (imageUrl: string) => {
 
 export default function Home() {
   const { data } = useQuery("images", getImages);
-  useEffect(() => {
-    console.log("new data", data);
-  }, []);
+
   return (
     <>
       <Head>

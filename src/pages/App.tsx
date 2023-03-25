@@ -19,7 +19,7 @@ export const App = () => {
   const { data } = useQuery("images", getImages);
 
   const createImageObject = (): ImageChoiceObject => {
-    const [randomNumber1, randomNumber2] = getTwoRandomIntsInRange(0, 3);
+    const [randomNumber1, randomNumber2] = getTwoRandomIntsInRange(0, 14);
 
     const {
       [randomNumber1]: { image_url: imageUrl1 },
