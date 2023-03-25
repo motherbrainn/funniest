@@ -16,7 +16,7 @@ export interface ImageChoiceObject {
 }
 
 export const App = () => {
-  const { data } = useQuery("posts", getImages);
+  const { data } = useQuery("images", getImages);
 
   const createImageObject = (): ImageChoiceObject => {
     const [randomNumber1, randomNumber2] = getTwoRandomIntsInRange(0, 3);

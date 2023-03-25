@@ -17,6 +17,7 @@ import {
 } from "react-query";
 import { useEffect, useState } from "react";
 import App from "./App";
+import { getAllImages } from "../pages/api/image/getImages";
 
 //const queryClient = new QueryClient();
 
@@ -27,23 +28,15 @@ import App from "./App";
 // use @giphy/js-fetch-api to fetch gifs, instantiate with your api key
 //const gf = new GiphyFetch(giphyApiKey);
 
-const getStuff = async () => {
-  const z = await fetch("http://localhost:3000/api/image/getImages").then(
-    (res) => res.json()
-  );
-
-  return z;
-};
 export const getImages = async () => {
-  const data = await fetch("http://localhost:3000/api/image/getImages").then(
-    (res) => res.json()
-  );
+  console.log("hi");
+  const data = await fetch("/api/image/getImages").then((res) => res.json());
   return data;
 };
 
 export const getStaticProps: GetStaticProps = async () => {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery("posts", getImages);
+  await queryClient.prefetchQuery("images", getAllImages);
 
   return {
     props: {
@@ -72,21 +65,6 @@ async function addPost(): Promise<void> {
   });
   Router.push("/");
 }
-// const submitData = async (e: React.SyntheticEvent) => {
-//   e.preventDefault();
-//   //
-//   try {
-//     const body = { title, content };
-//     await fetch("/api/post", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(body),
-//     });
-//     await Router.push("/drafts");
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
 
 export const voteForImage = async (imageUrl: string) => {
   await fetch("/api/image/vote", {
@@ -94,12 +72,10 @@ export const voteForImage = async (imageUrl: string) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ imageUrl }),
   });
-  //await Router.push("/");
 };
 
 export default function Home() {
-  //const [queryClient] = useState(() => new QueryClient());
-  const { data } = useQuery("posts", getImages);
+  const { data } = useQuery("images", getImages);
   useEffect(() => {
     console.log("new data", data);
   }, []);
