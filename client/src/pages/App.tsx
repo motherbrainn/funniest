@@ -19,12 +19,13 @@ export const App = () => {
   const { data } = useQuery("images", getImages);
 
   const createImageObject = (): ImageChoiceObject => {
-    const [randomNumber1, randomNumber2] = getTwoRandomIntsInRange(0, 14);
+    const [randomIndex1, randomIndex2] = getTwoRandomIntsInRange(
+      0,
+      data.length - 1
+    );
 
-    const {
-      [randomNumber1]: { image_url: imageUrl1 },
-      [randomNumber2]: { image_url: imageUrl2 },
-    } = data;
+    const imageUrl1 = data[randomIndex1].image_url;
+    const imageUrl2 = data[randomIndex2].image_url;
 
     return {
       left: {
