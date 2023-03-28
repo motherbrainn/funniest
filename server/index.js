@@ -12,17 +12,10 @@ const giphyApiKey = process.env["GIPHY_API_KEY"];
 
 const gf = new GiphyFetch(giphyApiKey);
 
-// cron.schedule("*/2 * * * * *", async () => {
-//   const gf = new GiphyFetch(giphyApiKey);
-//   const { data } = await gf.random({ tag: "beer" });
-//   const imageUrl = data.images.fixed_width.url;
-
-//   await prisma.funny_images.create({
-//     data: {
-//       image_url: imageUrl,
-//     },
-//   });
-// });
+cron.schedule("59 23 * * *", async () => {
+  //run job at 11:59 PM every day
+  cronJob();
+});
 
 const count = async () => {
   const test = await prisma.funny_images.count({});
@@ -49,11 +42,53 @@ const createImages = async () => {
   });
 };
 
-const dropImages = async (percentageOfImagesToDrop) => {
-  //drop bottom 70%
-  const amountToDrop =
-    Math.round(await prisma.funny_images.count()) * percentageOfImagesToDrop;
+const numberOfItemsToDrop = async (percentageOfImagesToDrop) => {
+  let amountToDrop = 0;
+  try {
+    const totalNumberOfRecords = await prisma.funny_images.count();
+    amountToDrop =
+      totalNumberOfRecords -
+      Math.round(totalNumberOfRecords) * percentageOfImagesToDrop;
+  } catch (e) {
+    console.log(e);
+  }
+  return amountToDrop;
+};
 
+const cronJob = async () => {
+  const amountToDrop = await numberOfItemsToDrop(0.7);
+  const imageThreshold = 200;
+  await dropImages(amountToDrop);
+  await addImages(imageThreshold, 0);
+};
+
+const addImages = async (imageThreshold, offset) => {
+  const gf = new GiphyFetch(giphyApiKey);
+
+  //check how many images are currently persisted
+  const numberOfCurrentlyPersistedImages = await prisma.funny_images.count();
+
+  if (numberOfCurrentlyPersistedImages < imageThreshold) {
+    const { data } = await gf.trending({ rating: "pg-13", offset, limit: 50 });
+
+    const newImages = data.map((image) => {
+      const imageUrl = image.images.fixed_width.url;
+      return { image_url: imageUrl };
+    });
+
+    await prisma.funny_images.createMany({
+      data: newImages,
+      skipDuplicates: true,
+    });
+
+    //keep adding images until we reach threshold
+    let newOffset = offset + 50;
+    addImages(imageThreshold, newOffset);
+  }
+  return;
+};
+
+const dropImages = async (amountToDrop) => {
   const result = await prisma.funny_images.findMany({
     orderBy: [{ votes: "desc" }],
   });
@@ -70,28 +105,11 @@ const dropImages = async (percentageOfImagesToDrop) => {
   } catch (e) {
     console.log(e);
   }
-
-  const gf = new GiphyFetch(giphyApiKey);
-  const { data } = await gf.search("funny", {
-    limit: 50,
-  });
-
-  const newImages = data.map((image) => {
-    const imageUrl = image.images.fixed_width.url;
-    return { image_url: imageUrl };
-  });
-
-  await prisma.funny_images.createMany({
-    data: newImages,
-    skipDuplicates: true,
-  });
-
-  return amountToDrop;
 };
 
 app.get("/", async (req, res) => {
-  const test = await dropImages(0.7);
-  res.send(JSON.stringify(test));
+  cronJob();
+  res.send("done");
 });
 
 app.get("/dropAll", async (req, res) => {
@@ -101,6 +119,11 @@ app.get("/dropAll", async (req, res) => {
 
 app.get("/createImages", async (req, res) => {
   await createImages();
+  res.send("done");
+});
+
+app.get("/test", async (req, res) => {
+  const { data } = await gf.trending({ offset, limit: 50 });
   res.send("done");
 });
 
