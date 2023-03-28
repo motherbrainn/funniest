@@ -12,17 +12,17 @@ const giphyApiKey = process.env["GIPHY_API_KEY"];
 
 const gf = new GiphyFetch(giphyApiKey);
 
-cron.schedule("*/2 * * * * *", async () => {
-  const gf = new GiphyFetch(giphyApiKey);
-  const { data } = await gf.random({ tag: "beer" });
-  const imageUrl = data.images.fixed_width.url;
+// cron.schedule("*/2 * * * * *", async () => {
+//   const gf = new GiphyFetch(giphyApiKey);
+//   const { data } = await gf.random({ tag: "beer" });
+//   const imageUrl = data.images.fixed_width.url;
 
-  await prisma.funny_images.create({
-    data: {
-      image_url: imageUrl,
-    },
-  });
-});
+//   await prisma.funny_images.create({
+//     data: {
+//       image_url: imageUrl,
+//     },
+//   });
+// });
 
 const count = async () => {
   const test = await prisma.funny_images.count({});
