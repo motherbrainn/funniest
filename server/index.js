@@ -13,13 +13,16 @@ const giphyApiKey = process.env["GIPHY_API_KEY"];
 const gf = new GiphyFetch(giphyApiKey);
 
 cron.schedule(
-  "54 21 * * *",
+  "58 21 * * *",
   async () => {
     //run job at 11:59 PM every day
     console.log("run");
     cronJob();
   },
-  "America/Los_Angeles"
+  {
+    scheduled: true,
+    timezone: "'America/Los_Angeles'",
+  }
 );
 
 const count = async () => {
