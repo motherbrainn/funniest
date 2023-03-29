@@ -13,10 +13,10 @@ const giphyApiKey = process.env["GIPHY_API_KEY"];
 const gf = new GiphyFetch(giphyApiKey);
 
 cron.schedule(
-  "41 22 * * *",
+  "0 0 * * *",
   async () => {
     try {
-      //run job at 11:59 PM every day
+      //run job at midnight PST every day
       //add some error handling
       console.log(`running at ${Date.now()}`);
       cronJob();
