@@ -18,6 +18,7 @@ import {
 import { useEffect, useState } from "react";
 import App from "./App";
 import { getAllImages } from "../pages/api/image/getImages";
+import Link from "next/link";
 
 //const queryClient = new QueryClient();
 
@@ -88,9 +89,9 @@ export default function Home() {
         <div>which image is funnier?</div>
         <App />
         <footer>
-          <a href="#" style={{ textDecoration: "underline" }}>
+          <Link href="/top10" style={{ textDecoration: "underline" }}>
             todays top 10 funniest images on the web
-          </a>
+          </Link>
         </footer>
       </main>
     </>
