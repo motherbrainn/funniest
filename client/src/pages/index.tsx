@@ -15,19 +15,9 @@ import {
   useQuery,
   type DehydratedState,
 } from "react-query";
-import { useEffect, useState } from "react";
-import App from "./App";
+import ImageContainer from "./ImageContainer";
 import { getAllImages } from "../pages/api/image/getImages";
 import Link from "next/link";
-
-//const queryClient = new QueryClient();
-
-//const giphyApiKey = env["GIPHY_API_KEY"];
-
-// pages/index.tsx
-
-// use @giphy/js-fetch-api to fetch gifs, instantiate with your api key
-//const gf = new GiphyFetch(giphyApiKey);
 
 export const getImages = async () => {
   const data = await fetch("/api/image/getImages").then((res) => res.json());
@@ -75,8 +65,6 @@ export const voteForImage = async (imageUrl: string) => {
 };
 
 export default function Home() {
-  const { data } = useQuery("images", getImages);
-
   return (
     <>
       <Head>
@@ -87,7 +75,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <div>which image is funnier?</div>
-        <App />
+        <ImageContainer />
         <footer>
           <Link href="/top10" style={{ textDecoration: "underline" }}>
             todays top 10 funniest images on the web

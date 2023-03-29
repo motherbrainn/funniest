@@ -1,4 +1,4 @@
-import { ImageChoiceObject } from "@/pages/App";
+import { ImageChoiceObject } from "@/pages/ImageContainer";
 import { ReactElement } from "react";
 import FunnyImage from "./FunnyImage";
 

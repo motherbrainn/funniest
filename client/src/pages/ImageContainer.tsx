@@ -15,7 +15,7 @@ export interface ImageChoiceObject {
   };
 }
 
-export const App = () => {
+export const ImageContainer = () => {
   const { data } = useQuery("images", getImages);
 
   const createImageObject = (): ImageChoiceObject => {
@@ -57,4 +57,4 @@ export const App = () => {
   return <div>{images && <ImageChoice images={images} />}</div>;
 };
 
-export default App;
+export default ImageContainer;
