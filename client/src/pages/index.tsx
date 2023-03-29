@@ -77,7 +77,7 @@ export default function Home() {
         <div>which image is funnier?</div>
         <ImageContainer />
         <footer>
-          <Link href="/top10" style={{ textDecoration: "underline" }}>
+          <Link href="/Top10" style={{ textDecoration: "underline" }}>
             todays top 10 funniest images on the web
           </Link>
         </footer>

@@ -1,5 +1,4 @@
 import { ReactElement } from "react";
-import { useQuery } from "react-query";
 
 interface FunnyImageProps {
   clickHandler: () => void;

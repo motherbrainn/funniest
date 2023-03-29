@@ -16,7 +16,7 @@ interface ImageType {
   vote: number;
 }
 
-export const top10 = () => {
+export const Top10 = () => {
   const { data } = useQuery("top10Images", getTop10Images);
 
   return (
@@ -32,8 +32,8 @@ export const top10 = () => {
       {data && (
         <ul style={{ listStyleType: "none" }}>
           {data.map((image: ImageType) => (
-            <li>
-              <img className="image" src={image.image_url} key={image.id} />
+            <li key={image.id}>
+              <img className="image" src={image.image_url} />
             </li>
           ))}
         </ul>
@@ -48,4 +48,4 @@ export const top10 = () => {
   );
 };
 
-export default top10;
+export default Top10;
