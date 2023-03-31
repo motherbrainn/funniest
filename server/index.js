@@ -12,6 +12,12 @@ const giphyApiKey = process.env["GIPHY_API_KEY"];
 
 const gf = new GiphyFetch(giphyApiKey);
 
+const getRandomIntInclusive = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+};
+
 cron.schedule(
   "0 0 * * *",
   async () => {
@@ -72,17 +78,32 @@ const cronJob = async () => {
   const amountToDrop = await numberOfItemsToDrop(0.7);
   const imageThreshold = 200;
   await dropImages(amountToDrop);
-  await addImages(imageThreshold, 0);
+  await addImages(imageThreshold);
 };
 
-const addImages = async (imageThreshold, offset) => {
+const addImages = async (imageThreshold) => {
   const gf = new GiphyFetch(giphyApiKey);
+
+  const searchString = "funny, trending, dogs";
+
+  const {
+    pagination: { total_count: totalCount },
+  } = await gf.search(searchString, { limit: 1 });
+
+  //4999 is max offset from API
+  const maxOffset = totalCount > 4999 ? 4999 : totalCount;
+
+  //giphy search returns results in consistent order. use random offset to get randomized new images
+  const randomOffset = getRandomIntInclusive(0, maxOffset);
 
   //check how many images are currently persisted
   const numberOfCurrentlyPersistedImages = await prisma.funny_images.count();
 
   if (numberOfCurrentlyPersistedImages < imageThreshold) {
-    const { data } = await gf.trending({ rating: "pg-13", offset, limit: 50 });
+    const { data } = await gf.search(searchString, {
+      limit: 50,
+      offset: randomOffset,
+    });
 
     const newImages = data.map((image) => {
       const imageUrl = image.images.fixed_width.url;
@@ -95,8 +116,7 @@ const addImages = async (imageThreshold, offset) => {
     });
 
     //keep adding images until we reach threshold
-    let newOffset = offset + 50;
-    addImages(imageThreshold, newOffset);
+    addImages(imageThreshold);
   }
   return;
 };
