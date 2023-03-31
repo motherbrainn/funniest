@@ -27,12 +27,14 @@ export const Top10 = () => {
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        textAlign: "center",
       }}
     >
+      <h2>today's top 10 images in the world</h2>
       {data && (
         <ul style={{ listStyleType: "none" }}>
           {data.map((image: ImageType) => (
-            <li key={image.id}>
+            <li key={image.id} className="top-image">
               <img className="image" src={image.image_url} />
             </li>
           ))}

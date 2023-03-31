@@ -10,7 +10,11 @@ export const FunnyImage = ({
   imageUrl,
 }: FunnyImageProps): ReactElement => {
   return (
-    <img className="image" onClick={() => clickHandler()} src={imageUrl} />
+    <img
+      className="image clickable"
+      onClick={() => clickHandler()}
+      src={imageUrl}
+    />
   );
 };
 

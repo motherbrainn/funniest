@@ -79,12 +79,10 @@ export default function Home() {
         ></script>
       </Head>
       <main className={styles.main}>
-        <div>which image is funnier?</div>
+        <h1>which image is funnier?</h1>
         <ImageContainer />
         <footer>
-          <Link href="/top10" style={{ textDecoration: "underline" }}>
-            todays top 10 funniest images on the web
-          </Link>
+          <Link href="/top10">todays top 10 funniest images on the web</Link>
         </footer>
       </main>
     </>

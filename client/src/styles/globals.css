@@ -97,7 +97,16 @@ body {
 
 a {
   color: inherit;
-  text-decoration: none;
+  text-decoration: underline;
+  font-size: 20px;
+}
+
+footer {
+  margin: 3rem;
+}
+
+.top-image {
+  margin: 1rem;
 }
 
 .image-container {
@@ -106,7 +115,11 @@ a {
   gap: 3rem;
 }
 
-.image:hover {
+h1 {
+  margin-bottom: 2rem;
+}
+
+.clickable.image:hover {
   cursor: pointer;
   transform: scale(1.1);
 }
