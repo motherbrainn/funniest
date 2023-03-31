@@ -72,11 +72,6 @@ export default function Home() {
         <meta name="description" content="funniest" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6379919013599329"
-          crossOrigin="anonymous"
-        ></script>
       </Head>
       <main className={styles.main}>
         <h1>which image is funnier?</h1>
