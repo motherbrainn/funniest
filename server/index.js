@@ -106,7 +106,7 @@ const addImages = async (imageThreshold) => {
     });
 
     const newImages = data.map((image) => {
-      const imageUrl = image.images.fixed_width.url;
+      const imageUrl = image.images.downsized_large.url;
       return { image_url: imageUrl };
     });
 

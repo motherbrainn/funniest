@@ -103,12 +103,12 @@ a {
 .image-container {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 3rem;
 }
 
 .image:hover {
   cursor: pointer;
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 @media (prefers-color-scheme: dark) {
   html {
