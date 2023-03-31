@@ -79,6 +79,20 @@ const cronJob = async () => {
   const imageThreshold = 200;
   await dropImages(amountToDrop);
   await addImages(imageThreshold);
+  await resetVotes();
+};
+
+const resetVotes = async () => {
+  await prisma.funny_images.updateMany({
+    where: {
+      votes: {
+        gt: 0,
+      },
+    },
+    data: {
+      votes: 0,
+    },
+  });
 };
 
 const addImages = async (imageThreshold) => {
@@ -158,6 +172,11 @@ app.get("/createImages", async (req, res) => {
 
 app.get("/test", async (req, res) => {
   const { data } = await gf.trending({ offset, limit: 50 });
+  res.send("done");
+});
+
+app.get("/resetVotes", async (req, res) => {
+  await resetVotes();
   res.send("done");
 });
 
