@@ -30,7 +30,7 @@ export const Top10 = () => {
         textAlign: "center",
       }}
     >
-      <h2>today's top 10 images in the world</h2>
+      <h2>todays top 10 images in the world</h2>
       {data && (
         <ul style={{ listStyleType: "none" }}>
           {data.map((image: ImageType) => (
