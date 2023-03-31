@@ -84,11 +84,12 @@ const cronJob = async () => {
 const addImages = async (imageThreshold) => {
   const gf = new GiphyFetch(giphyApiKey);
 
-  const searchString = "funny, trending, dogs";
+  const searchString = "funny, trending, dogs, meme";
+  const searchOptions = { lang: "en" };
 
   const {
     pagination: { total_count: totalCount },
-  } = await gf.search(searchString, { limit: 1 });
+  } = await gf.search(searchString, { limit: 1, ...searchOptions });
 
   //4999 is max offset from API
   const maxOffset = totalCount > 4999 ? 4999 : totalCount;
