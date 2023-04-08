@@ -99,8 +99,9 @@ const addImages = async (imageThreshold) => {
   const gf = new GiphyFetch(giphyApiKey);
 
   const searchString = "funny, trending, dogs, meme";
-  const searchOptions = { lang: "en" };
+  const searchOptions = { lang: "en", rating: "pg" };
 
+  //check how many total images are return from search string before doing real search at scale
   const {
     pagination: { total_count: totalCount },
   } = await gf.search(searchString, { limit: 1, ...searchOptions });
@@ -118,6 +119,7 @@ const addImages = async (imageThreshold) => {
     const { data } = await gf.search(searchString, {
       limit: 50,
       offset: randomOffset,
+      ...searchOptions,
     });
 
     const newImages = data.map((image) => {
