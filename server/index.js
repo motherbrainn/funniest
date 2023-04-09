@@ -32,7 +32,6 @@ cron.schedule(
   },
   {
     scheduled: true,
-    timezone: "America/Los_Angeles",
   }
 );
 
@@ -173,7 +172,13 @@ app.get("/createImages", async (req, res) => {
 });
 
 app.get("/test", async (req, res) => {
-  const { data } = await gf.trending({ offset, limit: 50 });
+  const searchString = "funny, trending, dogs, meme";
+  const searchOptions = { lang: "en", rating: "pg" };
+  const { data } = await gf.search(searchString, {
+    limit: 1,
+    ...searchOptions,
+  });
+  console.log(data[0].id);
   res.send("done");
 });
 
