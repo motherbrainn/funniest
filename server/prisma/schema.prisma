@@ -11,5 +11,6 @@ model funny_images {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   image_url String   @unique
+  image_id  String   @unique
   votes     Int?     @default(0)
 }

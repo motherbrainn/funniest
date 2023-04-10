@@ -123,7 +123,8 @@ const addImages = async (imageThreshold) => {
 
     const newImages = data.map((image) => {
       const imageUrl = image.images.downsized_large.url;
-      return { image_url: imageUrl };
+      const imageId = image.id;
+      return { image_url: imageUrl, image_id: imageId };
     });
 
     await prisma.funny_images.createMany({
