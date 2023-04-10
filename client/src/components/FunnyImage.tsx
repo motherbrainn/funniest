@@ -1,4 +1,6 @@
+import next from "next";
 import { ReactElement } from "react";
+import Image from "next/image";
 
 interface FunnyImageProps {
   clickHandler: () => void;
@@ -10,10 +12,13 @@ export const FunnyImage = ({
   imageUrl,
 }: FunnyImageProps): ReactElement => {
   return (
-    <img
+    <Image
       className="image clickable"
       onClick={() => clickHandler()}
       src={imageUrl}
+      alt="funny-image"
+      width={500}
+      height={500}
     />
   );
 };
