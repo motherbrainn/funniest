@@ -1,5 +1,5 @@
 const express = require("express");
-const cron = require("node-cron");
+const Cron = require("croner");
 const app = express();
 const port = 4000;
 const { GiphyFetch } = require("@giphy/js-fetch-api");
@@ -18,21 +18,19 @@ const getRandomIntInclusive = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
 };
 
-cron.schedule(
+Cron(
   "0 0 * * *",
   async () => {
     try {
       //run job at midnight PST every day
       //add some error handling
-      console.log(`running at ${Date.now()}`);
+      console.log(`running at ${Date().toString()}`);
       cronJob();
     } catch (e) {
       console.log("error", e);
     }
   },
-  {
-    scheduled: true,
-  }
+  { timezone: "America/Los_Angeles" }
 );
 
 const count = async () => {
