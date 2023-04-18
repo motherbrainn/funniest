@@ -4,11 +4,13 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 interface FunnyImageProps {
   clickHandler: () => void;
   imageUrl: string;
+  imageLoadCallback: () => void;
 }
 
 export const FunnyImage = ({
   clickHandler,
   imageUrl,
+  imageLoadCallback,
 }: FunnyImageProps): ReactElement => {
   const mobile = useMediaQuery("(min-width:600px)");
 
@@ -21,6 +23,7 @@ export const FunnyImage = ({
         alt="funny-image"
         height={mobile ? 500 : 150}
         width={mobile ? 500 : 150}
+        onLoad={imageLoadCallback}
       />
     </div>
   );
