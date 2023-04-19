@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useQuery } from "react-query";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const getTop10Images = async () => {
   const data = await fetch(`/api/image/getTop10Images`, {
@@ -17,6 +18,7 @@ interface ImageType {
 }
 
 export const Top10 = () => {
+  const mobile = useMediaQuery("(min-width:600px)");
   const { data } = useQuery("top10Images", getTop10Images);
 
   return (
@@ -35,7 +37,12 @@ export const Top10 = () => {
         <ul style={{ listStyleType: "none" }}>
           {data.map((image: ImageType) => (
             <li key={image.id} className="top-image">
-              <img className="image" src={image.image_url} />
+              <img
+                className="image"
+                src={image.image_url}
+                height={mobile ? 500 : 300}
+                width={mobile ? 500 : 300}
+              />
             </li>
           ))}
         </ul>

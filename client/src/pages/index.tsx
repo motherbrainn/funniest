@@ -1,20 +1,7 @@
 import Head from "next/head";
-import Image from "next/image";
-import styles from "@/styles/Home.module.css";
-import FunnyImage from "@/components/FunnyImage";
-import ImageChoice from "@/components/ImageChoice";
-import { GiphyFetch } from "@giphy/js-fetch-api";
-import prisma from "../../lib/prisma";
 import { GetStaticProps } from "next";
 import Router from "next/router";
-import {
-  dehydrate,
-  Hydrate,
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-  type DehydratedState,
-} from "react-query";
+import { dehydrate, QueryClient } from "react-query";
 import ImageContainer from "./ImageContainer";
 import { getAllImages } from "../pages/api/image/getImages";
 import Link from "next/link";
@@ -73,8 +60,8 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <h1>which image is funnier?</h1>
+      <main>
+        <h1>which image is funniest?</h1>
         <ImageContainer />
         <footer>
           <Link href="/top10">todays top 10 funniest images on the web</Link>

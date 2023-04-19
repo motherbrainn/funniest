@@ -1,5 +1,6 @@
 import { ImageChoiceObject } from "@/pages/ImageContainer";
 import styled from "@emotion/styled";
+import { useMediaQuery } from "@mui/material";
 import { ReactElement, useState } from "react";
 import FunnyImage from "./FunnyImage";
 
@@ -16,8 +17,11 @@ const ImageChoice = ({ images }: ImageChoiceProps): ReactElement => {
   const [leftImageLoaded, setLeftImageLoaded] = useState(false);
   const [rightImageLoaded, setRightImageLoaded] = useState(false);
 
+  const mobile = useMediaQuery("(min-width:600px)");
+
   const StyledImageContainer = styled("div")({
-    display: leftImageLoaded && rightImageLoaded ? "visible" : "none",
+    display: leftImageLoaded && rightImageLoaded ? "flex" : "none",
+    flexDirection: mobile ? "row" : "column",
   });
 
   const handleClick = (side: Side) => {

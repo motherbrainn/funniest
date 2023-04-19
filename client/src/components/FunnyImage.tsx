@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import styled from "@emotion/styled";
 
 interface FunnyImageProps {
   clickHandler: () => void;
@@ -21,8 +22,8 @@ export const FunnyImage = ({
         onClick={() => clickHandler()}
         src={imageUrl}
         alt="funny-image"
-        height={mobile ? 500 : 150}
-        width={mobile ? 500 : 150}
+        height={mobile ? 500 : 300}
+        width={mobile ? 500 : 300}
         onLoad={imageLoadCallback}
       />
     </div>
