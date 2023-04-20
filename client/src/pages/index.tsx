@@ -5,6 +5,8 @@ import { dehydrate, QueryClient } from "react-query";
 import ImageContainer from "./ImageContainer";
 import { getAllImages } from "../pages/api/image/getImages";
 import Link from "next/link";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export const getImages = async () => {
   const data = await fetch("/api/image/getImages").then((res) => res.json());
@@ -64,7 +66,14 @@ export default function Home() {
         <h1>which image is funniest?</h1>
         <ImageContainer />
         <footer>
-          <Link href="/top10">todays top 10 funniest images on the web</Link>
+          {/* <Link href="/top10">todays top 10 funniest images on the web</Link> */}
+          <BottomNavigation showLabels>
+            <BottomNavigationAction
+              label="Today's Top 10"
+              icon={<FavoriteIcon />}
+              href="/top10"
+            />
+          </BottomNavigation>
         </footer>
       </main>
     </>

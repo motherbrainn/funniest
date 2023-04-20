@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { useQuery } from "react-query";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import { Home } from "@mui/icons-material";
+import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 
 const getTop10Images = async () => {
   const data = await fetch(`/api/image/getTop10Images`, {
@@ -49,9 +51,9 @@ export const Top10 = () => {
       )}
 
       <footer>
-        <Link href="/" style={{ textDecoration: "underline" }}>
-          home
-        </Link>
+        <BottomNavigation showLabels>
+          <BottomNavigationAction label="Home" icon={<Home />} href="/" />
+        </BottomNavigation>
       </footer>
     </div>
   );
