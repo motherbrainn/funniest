@@ -7,6 +7,14 @@ import { getAllImages } from "../pages/api/image/getImages";
 import Link from "next/link";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import useLocalStorage from "@motherbrainn/use-local-storage";
+
+const [localStorageValue, localStorageSetterFunction] = useLocalStorage(
+  "key",
+  "value"
+);
+
+console.log(localStorageValue);
 
 export const getImages = async () => {
   const data = await fetch("/api/image/getImages").then((res) => res.json());
