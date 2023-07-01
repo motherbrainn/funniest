@@ -63,7 +63,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1>which image is funniest?</h1>
+        <h1>which image is funniest??</h1>
         <ImageContainer />
         <footer>
           {/* <Link href="/top10">todays top 10 funniest images on the web</Link> */}
