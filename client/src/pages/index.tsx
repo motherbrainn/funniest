@@ -69,7 +69,7 @@ export default function Home() {
           {/* <Link href="/top10">todays top 10 funniest images on the web</Link> */}
           <BottomNavigation showLabels>
             <BottomNavigationAction
-              label="Today's Top 10"
+              label="Today's Top 10?"
               icon={<FavoriteIcon />}
               href="/top10"
             />
